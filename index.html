@@ -8,9 +8,20 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+
+	<style>
+		body {
+            padding: 0;
+            margin: 0;
+        }
+        html, body, #map {
+            height: 100%;
+            width: 100%;
+        }
+	</style>
 </head>
 <body>
-	<div id="map" style="width: 600px; height: 400px"></div>
+	<div id="map"></div>
 
 	<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 	<script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
@@ -26,19 +37,43 @@
 			id: 'examples.map-20v6611k'
 		}).addTo(map);
 
+		var aov_marker = {
+		    radius: 8,
+		    fillColor: "#eee",
+		    color: "#000",
+		    weight: 1,
+		    opacity: 1,
+		    fillOpacity: 0.8
+		};
+
+		var legacy_marker = {
+		    radius: 8,
+		    fillColor: "#ff7800",
+		    color: "#000",
+		    weight: 1,
+		    opacity: 1,
+		    fillOpacity: 0.8
+		};
+
 		$.getJSON("data/locations_quickest.geojson", function(data) {
 		    var geojson = L.geoJson(data, {
 		      onEachFeature: function (feature, layer) {
 		        layer.bindPopup(feature.properties.id);
-		      }
+		      },
+		      pointToLayer: function (feature, latlng) {
+			    return L.circleMarker(latlng, legacy_marker);
+			  }
 		    });
 		    geojson.addTo(map);
 		  });
 		$.getJSON("data/aov_check_nodups.geojson", function(data) {
 		    var geojson = L.geoJson(data, {
 		      onEachFeature: function (feature, layer) {
-		        layer.bindPopup(feature.properties.id);
-		      }
+		        layer.bindPopup(feature.properties['Site name/ID']);
+		      },
+		      pointToLayer: function (feature, latlng) {
+			    return L.circleMarker(latlng, aov_marker);
+			  }
 		    });
 		    geojson.addTo(map);
 		    map.fitBounds(geojson.getBounds());
