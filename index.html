@@ -46,13 +46,63 @@
 		    fillOpacity: 0.8
 		};
 
-		var legacy_marker = {
-		    radius: 4,
-		    fillColor: "#ff7800",
-		    color: "#000",
-		    weight: 1,
-		    opacity: 1,
-		    fillOpacity: 0.8
+		var legacy_markers = {
+			'ggd200': {
+			    radius: 4,
+			    fillColor: "#ffdbbb",
+			    color: "#000",
+			    weight: 1,
+			    opacity: 1,
+			    fillOpacity: 0.8
+			},
+			'ggd332': {
+			    radius: 4,
+			    fillColor: "#ffc088",
+			    color: "#000",
+			    weight: 1,
+			    opacity: 1,
+			    fillOpacity: 0.8
+			},
+			'ggd353': {
+			    radius: 4,
+			    fillColor: "#ff9c44",
+			    color: "#000",
+			    weight: 1,
+			    opacity: 1,
+			    fillOpacity: 0.8
+			},
+			'ggd361': {
+			    radius: 4,
+			    fillColor: "#ff7800",
+			    color: "#000",
+			    weight: 1,
+			    opacity: 1,
+			    fillOpacity: 0.8
+			},
+			'ggd503': {
+			    radius: 4,
+			    fillColor: "#ca3a31",
+			    color: "#000",
+			    weight: 1,
+			    opacity: 1,
+			    fillOpacity: 0.8
+			},
+			'ggd605': {
+			    radius: 4,
+			    fillColor: "#af322a",
+			    color: "#000",
+			    weight: 1,
+			    opacity: 1,
+			    fillOpacity: 0.8
+			},
+			'go2189': {
+			    radius: 4,
+			    fillColor: "#ff780078221d",
+			    color: "#000",
+			    weight: 1,
+			    opacity: 1,
+			    fillOpacity: 0.8
+			}
 		};
 
 		$.getJSON("data/locations_quickest.geojson", function(data) {
@@ -61,7 +111,7 @@
 		        layer.bindPopup(feature.properties.id);
 		      },
 		      pointToLayer: function (feature, latlng) {
-			    return L.circleMarker(latlng, legacy_marker);
+			    return L.circleMarker(latlng, legacy_markers[feature.properties.dataset]);
 			  }
 		    });
 		    geojson.addTo(map);
