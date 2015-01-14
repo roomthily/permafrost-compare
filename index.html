@@ -123,9 +123,9 @@
 			dataType: 'json'
 		}).done(function(data) {
 		    var geojson = L.geoJson(data, {
-		      onEachFeature: function (feature, layer) {
+		      /**onEachFeature: function (feature, layer) {
 		        layer.bindPopup(feature.properties.id);
-		      },
+		      },**/
 		      pointToLayer: function (feature, latlng) {
 			    return L.circleMarker(latlng, legacy_markers[feature.properties.dataset])
 			    	.bindLabel([feature.properties.dataset, feature.properties.id].join([separator = ', ']));
@@ -141,9 +141,9 @@
 			dataType: 'json'
 		}).done(function(data) {
 		    var geojson = L.geoJson(data, {
-		      onEachFeature: function (feature, layer) {
+		      /**onEachFeature: function (feature, layer) {
 		        layer.bindPopup(feature.properties['Site name/ID']);
-		      },
+		      },**/
 		      pointToLayer: function (feature, latlng) {
 			    return L.circleMarker(latlng, aov_marker)
 			    	.bindLabel(['GTN-P', feature.properties['Site name/ID']].join([separator=', ']));
