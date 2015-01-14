@@ -113,7 +113,13 @@
 			}
 		};
 
-		$.getJSON("data/locations_quickest.geojson", function(data) {
+		var lyrs = {};
+
+		$.ajax({
+			url: "data/locations_quickest.geojson",
+			async: false,
+			dataType: 'json'
+		}).done(function(data) {
 		    var geojson = L.geoJson(data, {
 		      onEachFeature: function (feature, layer) {
 		        layer.bindPopup(feature.properties.id);
@@ -123,8 +129,14 @@
 			  }
 		    });
 		    geojson.addTo(map);
-		  });
-		$.getJSON("data/aov_check_nodups.geojson", function(data) {
+		    lyrs['NSIDC Legacy Data'] = geojson;
+		});
+
+		$.ajax({
+			url: "data/aov_check_nodups.geojson",
+			async: false,
+			dataType: 'json'
+		}).done(function(data) {
 		    var geojson = L.geoJson(data, {
 		      onEachFeature: function (feature, layer) {
 		        layer.bindPopup(feature.properties['Site name/ID']);
@@ -133,8 +145,11 @@
 			    return L.circleMarker(latlng, aov_marker);
 			  }
 		    });
+		    lyrs['AOV GTN-P Data'] = geojson;
 		    geojson.addTo(map);
 		  });
+
+		L.control.layers(null, lyrs).addTo(map);
 
 
 	</script>
